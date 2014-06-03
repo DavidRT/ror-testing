@@ -78,4 +78,24 @@ class ProductTest < ActiveSupport::TestCase
     assert_equal "has already been taken",product.errors[:title].join('; ' )
   end
 
+  #valida que titulo tenga como minimo 10 caracteres.
+  test "title is at least 10 characters long" do
+    product = Product.new(:price => 9.99,
+                          :description => "yyyy",
+                          :image_url => "zzz.jpg")
+
+    product.title = "this will be valid title"
+    assert product.valid?, product.errors[:title].join('; ')
+   # assert_equal "at least 10 characteres",product.errors[:title].join('; ')
+
+    product.title = "this not"
+    assert product.invalid?, product.errors[:title].join('; ')
+   
+
+    product.title = "this valid too"
+   assert product.valid?, product.errors[:title].join('; ')
+    
+
+  end
+
 end
